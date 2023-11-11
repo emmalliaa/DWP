@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik:wght@500&display=swap');
+
+*{
+    font-family: Rubik;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+}
+section{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.btn,
+.delete-btn,
+.option-btn{
+    display: block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    font-size: 1.6rem;
+    padding: 1rem 1rem ;
+    text-transform: uppercase;
+}
+.message{
+    position: sticky;
+    top: 20;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem ;
+    border: 1px black solid;
+    
+}
+.form-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height:100vh ;
+}
+.form-container form{
+    padding: 2rem;
+    text-align: center;
+    width: 50rem;
+}
+form h3{
+    font-size: 2.5rem;
+
+}
+.box{
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+}
