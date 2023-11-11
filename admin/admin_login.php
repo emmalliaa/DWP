@@ -1,7 +1,6 @@
 <?php
+
 include('../dataacess/DBConnector.php'); 
-
-
 
 
 
@@ -19,7 +18,7 @@ if (isset($_POST['submit'])) {
     if ($result->num_rows > 0) {
         $fetch_admin_id = $result->fetch_assoc();
         $_SESSION['admin_id'] = $fetch_admin_id['adminID'];
-        header('Location:dashboard.php');
+        header('location:dashboard.php');
     } else {
         $message[] = 'Incorrect username or password';
     }

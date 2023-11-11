@@ -20,7 +20,7 @@ $result = mysqli_query($connection, $sql);
 
 
   <?php
-while($row = mysqli_fetch_assoc($result)){
+    while($row = mysqli_fetch_assoc($result)){
  ?>
 
     <form action="" method="post" class="box" >

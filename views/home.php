@@ -1,6 +1,11 @@
 <?php
 include('../includes/header.php');
 
+$sql= "SELECT Limited.ProductID, Limited.StartDate, Limited.EndDate,Product.ProductID, Product.ProductName, Product.ProductPrice, Product.Description, Product.ImageURL
+FROM Limited
+JOIN Product ON Limited.ProductID = Product.ProductID";
+$result = mysqli_query($connection, $sql);
+
 
 ?>
 
@@ -34,30 +39,25 @@ include('../includes/header.php');
 <!--hero section ends-->
 
 
-
 <div class="offer">
     <h2> <span class="brown">Weekend</span> special product</h2>
-    <p>checkout our daily special offer</p>
+    <p>checkout our weekend special offer</p>
     <div class="product-list">
-            <div class="product-item">
-                <img src="../assets/img/FlatWhite.jpg" alt="" srcset="">
-                <h3>Cinameon Spiced Latte</h3>
-                <p>Product Description...</p>
-                <a href="product-url" class="btn">View Details</a>
-            </div>
-                <div class="product-item">
-                <img src="../assets/img/Cappuccino.jpg" alt="Product Name">
-                <h3>Product Name</h3>
-                <p>Product Description...</p>
-                <a href="product-url" class="btn">View Details</a>
-            </div>
-            <div class="product-item">
-                <img src="../assets/img/LotusMocca.jpg" alt="Product Name">
-                <h3>Product Name</h3>
-                <p>Product Description...</p>
-                <a href="product-url" class="btn">View Details</a>
-            </div>
-      </div>
+        <?php
+            while($row = mysqli_fetch_assoc($result)){
+        ?>
+        <div class="product-item">
+            <img src="<?php echo $row["ImageURL"];?>" alt="" srcset="">
+            <h3><?php echo $row["ProductName"];?></h3>
+            <p><?php echo $row["Description"];?></p>
+            <div class="price"><span><?php echo $row["ProductPrice"];?></span>DKK</div>
+            <a href="product-url" class="btn">View Details</a>
+        </div>
+        <?php
+            };
+        ?>
+    </div>
+
 </div>
 
 
