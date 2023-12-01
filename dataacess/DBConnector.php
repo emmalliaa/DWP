@@ -1,24 +1,33 @@
 <?php
-class DBConnect {
+namespace Models;
+
+class DBConnect
+{
     private $host = "localhost";
     private $user = "root";
     private $password = "root";
     private $database = "CoffeeShopDB";
     private $conn;
 
-    public function __construct() {
-        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
+    public function __construct()
+    {
 
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+        try {
+            $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
+
+            if ($this->conn->connect_error) {
+                die("Connection failed: " . $this->conn->connect_error);
+            }
+        } catch (mysqli_sql_exception $e) {
+            throw new \mysqli_sql_exception("Error retrieving data: {$e->getMessage()}", $e->getCode(), $e);
         }
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
     }
 }
 
-$db = new DBConnect();
-$connection = $db->getConnection();
+
 ?>
