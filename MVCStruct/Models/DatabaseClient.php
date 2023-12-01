@@ -12,13 +12,19 @@ class DatabaseClient
     private $password;
     private $connection;
 
+
     private function __construct()
     {
         $this->host = 'localhost';
         $this->database = "CoffeeShopDB";
         $this->user = "root";
         $this->password = "root";
-        $this->createConnection();
+        // $this->createConnection();
+        $this->connection = new \mysqli($this->host, $this->user, $this->password, $this->database);
+
+        if ($this->connection->connect_error) {
+            die("Could not connect to database");
+        }
     }
 
     private function __clone()
