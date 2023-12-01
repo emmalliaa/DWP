@@ -1,13 +1,11 @@
 <?php 
-include('../config/config.php');
 include('../dataacess/DBConnector.php'); 
 
 if(isset($_SESSION['CustomerID'])){
-   $customer_id = $_SESSION['CustomerID'];
-}else 
-    $customer_id = '';
-
-
+    $customer_id = $_SESSION['CustomerID'];
+}else{
+    $customer_id= '';
+}
 
 ?>
 
@@ -33,9 +31,16 @@ if(isset($_SESSION['CustomerID'])){
             </nav>
 
             <div class="icons">
-
+            <?php
+                $count_user_cart_items = $connection->prepare("SELECT * FROM `ShoppingCart` WHERE CustomerID = ?");
+                $count_user_cart_items->bind_param("i", $customerID);
+                $count_user_cart_items->execute();
+                $result = $count_user_cart_items->get_result();
+            
+                $total_user_cart_items = $result->num_rows;
+            ?>
                 <a href="search.php" > <i class="fas fa-search"></i> </a>
-                <a href="cart.php"> <i class="fas fa-shopping-cart "></i><span>() </span> </a>
+                <a href="cart.php"> <i class="fas fa-shopping-cart "></i><span>(<?php echo $total_user_cart_items;?>) </span> </a>
                 <div id="user-btn" class="fas fa-user"> </div>
                 <div id="menu-btn" class="fas fa-bars"> </div>
 
@@ -51,12 +56,11 @@ if(isset($_SESSION['CustomerID'])){
                 $fetch_profile = $result->fetch_assoc();
                 
             ?>
-        <p class="name"><?= $fetch_profile['name']; ?></p>
+        <p class="name"><?= $fetch_profile['FirstName']; ?></p>
         <div class="flex">
             <a href="profile.php" class="btn">profile</a>
             <a href="logout.php" onclick="return confirm('Logout from this website?');" class="delete-btn">Logout</a>
         </div>
-
         <?php
         }
         else{

@@ -139,7 +139,7 @@ section{
 }
 .header .flex .profile .account{
     margin-top: 2rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--light-color);
 }
 .header .flex .profile .account a{ 
@@ -235,6 +235,22 @@ section{
     max-width: 40rem;
     margin: 0 auto;
     border: #222 1px solid;
+}
+
+.message{
+    position: sticky;
+    top:0;
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2rem;
+    z-index: 1100;
+}
+.message span{
+    font-size: 2rem;
 }
 
 /*NEWSSSS*/

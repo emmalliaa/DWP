@@ -1,5 +1,12 @@
 <?php
 include('../includes/header.php');
+include_once ('../config/config.php');
+
+if(isset($_SESSION['CustomerID'])){
+    $customer_id = $_SESSION['CustomerID'];
+}else{
+    $customer_id= '';
+}
 
 if (isset($message)) {
     foreach ($message as $msg) {
@@ -10,7 +17,6 @@ if (isset($message)) {
         ';
     }
 }
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fname = $_POST['FirstName'];
@@ -28,29 +34,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $select_customer->bind_param("ss", $email, $num);
     $select_customer->execute();
     $result = $select_customer->get_result();
-
+    
     if ($result->num_rows > 0) {
         $message[] = 'Email or Number is already in use';
     } else {
         $insert_customer = $connection->prepare("INSERT INTO `Customer` (FirstName, LastName, Password, Email, Phone) VALUES (?, ?, ?, ?, ?)");
         $insert_customer->bind_param("sssss", $fname, $lname, $pass, $email, $num);
-        $insert_customer->execute();
 
-        $confirm_customer = $connection->prepare("SELECT * FROM `Customer` WHERE Email = ? AND Password = ?");
-        $confirm_customer->bind_param("ss", $email, $pass);
-        $confirm_customer->execute();
+        if ($insert_customer->execute()) {
+            $confirm_customer = $connection->prepare("SELECT * FROM `Customer` WHERE Email = ? AND Password = ?");
+            $confirm_customer->bind_param("ss", $email, $pass);
+            $confirm_customer->execute();
+            $row = [];
+            $confirm_customer->bind_result($row['CustomerID']);
+            $confirm_customer->fetch();
 
-        if ($confirm_customer->rowCount() > 0) {
-            $row = $confirm_customer->fetch_assoc();
-            $_SESSION['CustomerID'] = $row['CustomerID'];
-            $message[] = 'Registered Successfully';
+            if ($confirm_customer->num_rows > 0) {
+
+                $_SESSION['CustomerID'] = $row['CustomerID'];
+                $message[] = 'Registered Successfully';
+            }
+    
+            $confirm_customer->close();
+        } else {
+            $message[] = 'Registration failed';
         }
-    }
 
+        $insert_customer->close();
+    }
+    
     $select_customer->close();
-    $insert_customer->close();
-    $confirm_customer->close();
-} 
+    
+}
 ?>
 
 <section class="form-container">
