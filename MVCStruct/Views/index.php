@@ -10,10 +10,8 @@ $controller = new C\HomeController();
 
 function showAllProducts(C\HomeController $controller)
 {
-    foreach ($controller->getAllFromTable("Product") as $product) {
-        $productName = $product['ProductName'];
-
-        echo "<p>Product name: $productName </p> </br>";
+    while ($row = mysqli_fetch_array($controller->getAllFromTable("Product"))) {
+        echo "<p>" . $row["ProductName"] . "</p>";
     }
 }
 

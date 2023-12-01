@@ -65,6 +65,8 @@ class DatabaseClient
             $result = mysqli_query($this->connection, $query);
 
             return $result;
+
+
         } catch (\mysqli_sql_exception $e) {
             echo "Error getting from $table : " . $e->getMessage();
             throw new \mysqli_sql_exception("Error getting from $table", $e->getCode(), $e);
